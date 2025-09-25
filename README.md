@@ -43,3 +43,49 @@
 - MergeSort experimental results **align well with theoretical predictions**.
 - Reusable buffer and insertion sort cutoff help reduce memory allocations and recursion overhead.
 - Algorithm behaves as expected for both time and recursion depth, confirming efficiency and correctness.
+
+
+
+
+# QuickSort Report
+
+## 1. Architecture Notes
+- **Algorithm:** Robust QuickSort  
+- **Pivot Selection:** Randomized pivot  
+- **Recursion Strategy:** Recurse on the smaller partition, iterate on the larger one to keep stack depth bounded  
+- **Metrics Collected:** Execution time (ms), comparisons, maximum recursion depth  
+- **Safety Features:** Small-n cut-off handled implicitly by recursion strategy to avoid deep stack calls  
+
+---
+
+## 2. Recurrence Analysis
+- **Average Case:** Θ(n log n) — due to balanced partitioning with randomized pivot  
+- **Worst Case:** Θ(n²) — occurs with highly unbalanced partitions, but randomized pivot reduces probability  
+- **Recursion Depth:** Bounded by ~2 * log₂(n) for typical inputs  
+- **Analysis Method:** Master Theorem intuition for divide-and-conquer; matches observed bounded recursion depth  
+
+---
+
+## 3. Benchmark Results
+
+| n     | time (ms) | comparisons | maxDepth |
+|-------|-----------|------------|----------|
+| 10    | 0         | 30         | 1        |
+| 100   | 0         | 608        | 4        |
+| 1000  | 0         | 10306      | 7        |
+| 5000  | 0         | 58516      | 10       |
+| 10000 | 2         | 126884     | 11       |
+
+**Observations:**  
+- Execution time grows slowly for small arrays and increases noticeably at n = 10000.  
+- Comparisons roughly follow n log n growth, consistent with theoretical expectations.  
+- Maximum recursion depth increases logarithmically with n, confirming the bounded-stack strategy works.  
+- Constant-factor effects (cache, GC) are minimal for small n; larger arrays start showing small overhead in time measurements.  
+
+---
+
+## 4. Summary
+- **Alignment with Theory:** Metrics match Θ(n log n) expected for average case.  
+- **Mismatch:** Minor timing differences due to measurement resolution and system effects.  
+- Overall, QuickSort implementation is robust, recursion depth is controlled, and performance scales as expected.
+
