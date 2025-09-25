@@ -89,3 +89,47 @@
 - **Mismatch:** Minor timing differences due to measurement resolution and system effects.  
 - Overall, QuickSort implementation is robust, recursion depth is controlled, and performance scales as expected.
 
+
+
+# Deterministic Select (Median-of-Medians) Report
+
+## Algorithm Overview
+Deterministic Select implements the Median-of-Medians algorithm to find the k-th smallest element in an unsorted array in O(n) worst-case time.  
+- The input array is divided into groups of 5 elements.  
+- The median of each group is found.  
+- The median of these medians is chosen as the pivot.  
+- Partition the array around the pivot and recurse only into the side that contains the k-th element.  
+- Always prefer recursing into the smaller side to keep stack depth bounded.
+
+## Recurrence Analysis
+Using the Akra–Bazzi intuition:  
+- Partitioning takes O(n) time.  
+- The pivot guarantees at least 30% of elements are discarded each recursion.  
+- Recurrence: T(n) ≤ T(n/5) + T(7n/10) + O(n)  
+- Solving gives T(n) = Θ(n), i.e., linear worst-case time.  
+
+## Metrics Collection
+Metrics recorded:  
+- `n` = size of array  
+- `time(ms)` = execution time  
+- `result` = selected k-th smallest element  
+
+### Sample Data
+
+| n     | time(ms) | result  |
+|-------|----------|---------|
+| 10    | 1        | 7       |
+| 100   | 0        | 54      |
+| 1000  | 2        | 523     |
+| 5000  | 6        | 2598    |
+| 10000 | 13       | 5031    |
+
+## Observations
+- Execution time scales roughly linearly with n.  
+- Recursion depth remains small due to always recursing into the smaller partition.  
+- The algorithm reliably finds the correct k-th element for all tested sizes.  
+- Minor fluctuations in execution time are due to CPU scheduling and cache effects.
+
+## Summary
+Deterministic Select performs as expected: linear time, bounded recursion, and predictable performance even on adversarial input. Metrics align closely with theoretical analysis.
+
