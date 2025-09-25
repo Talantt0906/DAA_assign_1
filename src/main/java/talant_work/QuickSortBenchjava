@@ -1,0 +1,38 @@
+package talant_work;
+
+import java.util.Random;
+
+public class QuickSortBench {
+    public static void main(String[] args) {
+        int[] sizes = {10, 100, 1000, 5000, 10000};
+        String fileName = "quicksort_results.csv";
+        CSVWriter writer = new CSVWriter(fileName);
+
+        
+        writer.writeLine("n,time(ms),comparisons,maxDepth");
+
+        Random rand = new Random();
+
+        for (int n : sizes) {
+            int[] arr = new int[n];
+            for (int i = 0; i < n; i++) arr[i] = rand.nextInt(100000);
+
+            QuickSort.resetMetrics(); 
+
+            long start = System.nanoTime();
+            QuickSort.sort(arr);
+            long end = System.nanoTime();
+
+            long timeMs = (end - start) / 1_000_000; 
+            long comparisons = QuickSort.getComparisons();
+            int maxDepth = QuickSort.getMaxDepth();
+
+            writer.writeLine(n + "," + timeMs + "," + comparisons + "," + maxDepth);
+
+            System.out.println("n=" + n + " time=" + timeMs + "ms comparisons=" + comparisons + " maxDepth=" + maxDepth);
+        }
+
+        writer.close();
+        System.out.println("Benchmark finished. Results saved to " + fileName);
+    }
+}
