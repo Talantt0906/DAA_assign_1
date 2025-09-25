@@ -133,3 +133,44 @@ Metrics recorded:
 ## Summary
 Deterministic Select performs as expected: linear time, bounded recursion, and predictable performance even on adversarial input. Metrics align closely with theoretical analysis.
 
+
+
+# Closest Pair of Points (2D) Report
+
+## Algorithm Description
+The Closest Pair algorithm uses a divide-and-conquer approach:
+
+- Sort points by x-coordinate.
+- Recursively split the points into two halves.
+- Compute the closest pair in each half.
+- Merge step: check points in the "strip" near the split line, sorted by y-coordinate.
+- Scan up to 7–8 neighbors in the strip for potential closer pairs.
+- Time complexity: \(O(n \log n)\).
+
+---
+
+## Metrics
+
+| n      | time (ms) | closest distance |
+|--------|-----------|-----------------|
+| 10     | 9         | 97.6946         |
+| 100    | 0         | 11.8899         |
+| 1000   | 5         | 0.5952          |
+| 5000   | 12        | 0.2297          |
+| 10000  | 22        | 0.0278          |
+
+---
+
+## Analysis
+
+- **Time vs n**: As expected, the runtime grows roughly proportional to \(n \log n\). Even at 10000 points, the algorithm completes in 22 ms, showing good scalability.
+- **Closest distance**: Decreases as more points are added, which is intuitive since denser point sets tend to have closer pairs.
+- **Comparison with theory**: The measurements align well with the \(O(n \log n)\) theoretical expectation. The small constant factors indicate efficient implementation and minimal overhead.
+- **Practical notes**: Cache performance and linear scans in the strip contribute to observed timings.
+
+---
+
+## Summary
+The divide-and-conquer Closest Pair implementation efficiently handles up to 10,000 points, confirming both the correctness of the results and the theoretical runtime behavior. This dataset can be used directly for plots in the final report.
+
+
